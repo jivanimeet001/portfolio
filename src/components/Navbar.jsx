@@ -5,7 +5,7 @@ import { motion, useAnimation } from 'framer-motion';
 
 const Nav = styled.nav`
   width: 100vw;
-  background: linear-gradient(120deg, rgba(255,255,255,0.92) 60%, rgba(168,139,250,0.85) 100%);
+  background: ${({ theme }) => theme.bodyBg};
   backdrop-filter: blur(18px) saturate(1.8);
   box-shadow:
     0 8px 32px 0 rgba(120,60,255,0.18),
@@ -42,16 +42,17 @@ const NavList = styled.ul`
 const NavItem = styled.li`
   font-size: 1.18rem;
   font-weight: 700;
-  color: #2a174d;
+  color: ${({ theme }) => theme.text};
   letter-spacing: 0.01em;
   cursor: pointer;
-  transition: color 0.2s, text-shadow 0.2s;
+  transition: color 0.2s, text-shadow 0.2s, font-weight 0.2s;
   text-shadow:
     0 2px 8px rgba(120,60,255,0.10),
     0 1.5px 0 #fff,
     0 0.5px 0 #a78bfa;
   &:hover {
-    color: #7c3aed;
+    color: ${({ theme }) => theme.accent};
+    font-weight: 900;
     text-shadow:
       0 4px 16px rgba(120,60,255,0.18),
       0 2px 0 #fff,
@@ -77,6 +78,15 @@ export default function Navbar() {
             offset={-60}
             onClick={() => handle3DScroll('about')}
           >About</ScrollLink>
+        </NavItem>
+        <NavItem>
+          <ScrollLink
+            to="work-experience"
+            smooth={true}
+            duration={700}
+            offset={-60}
+            onClick={() => handle3DScroll('work-experience')}
+          >Work Experience</ScrollLink>
         </NavItem>
         <NavItem>
           <ScrollLink
