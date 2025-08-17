@@ -2,37 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { contact } from '../data';
 import { SectionTitle, Card } from '../styles/GlobalStyles';
-import { MdEmail } from 'react-icons/md';
-import { FaLinkedin, FaGithub } from 'react-icons/fa';
-
-const ContactList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  align-items: flex-start;
-  margin: 0 auto;
-  max-width: 400px;
-`;
-
-const ContactItem = styled.a`
-  font-size: 1.1rem;
-  color: #2563eb;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  &:hover {
-    color: #1e40af;
-  }
-`;
-
-const CenterWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-`;
 
 const ContactForm = styled.form`
   display: flex;
@@ -84,37 +53,46 @@ const SendButton = styled.button`
     background: linear-gradient(90deg, #a78bfa 0%, #7c3aed 100%);
   }
 `;
+const CenterWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
 
 export default function Contact() {
-  // Simple mailto form handler
-  const handleSubmit = (e) => {
+  // Formspree endpoint (replace with your own Formspree endpoint)
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xrblvejq';
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
-    const name = form.name.value;
-    const email = form.email.value;
-    const message = form.message.value;
-    const mailto = `mailto:${contact.email}?subject=Enquiry from ${encodeURIComponent(name)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`)}`;
-    window.location.href = mailto;
+    const data = {
+      name: form.name.value,
+      email: form.email.value,
+      message: form.message.value,
+    };
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        alert('Message sent!');
+        form.reset();
+      } else {
+        alert('There was an error sending your message. Please try again later.');
+      }
+    } catch (err) {
+      alert('There was an error sending your message. Please try again later.');
+    }
   };
   return (
     <section id="contact">
       <SectionTitle>Contact</SectionTitle>
       <CenterWrapper>
         <Card>
-          <ContactList>
-            <ContactItem href={`mailto:${contact.email}`}>
-              <MdEmail size={22} />
-              Email: {contact.email}
-            </ContactItem>
-            <ContactItem href={contact.linkedin} target="_blank" rel="noopener noreferrer">
-              <FaLinkedin size={22} color="#0077b5" />
-              LinkedIn
-            </ContactItem>
-            <ContactItem href={contact.github} target="_blank" rel="noopener noreferrer">
-              <FaGithub size={22} />
-              GitHub
-            </ContactItem>
-          </ContactList>
           <ContactForm onSubmit={handleSubmit}>
             <Input name="name" type="text" placeholder="Your Name" required />
             <Input name="email" type="email" placeholder="Your Email" required />

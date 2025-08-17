@@ -9,6 +9,7 @@ import Contact from './components/Contact';
 import ModernHero from './components/ModernHero';
 import { GlobalStyle, Section, lightTheme, darkTheme, Button } from './styles/GlobalStyles';
 import { ThemeProvider } from 'styled-components';
+import Footer from './components/Footer';
 
 function App() {
   const [dark, setDark] = useState(() => {
@@ -68,6 +69,7 @@ function App() {
           <Contact />
         </Section>
       </motion.div>
+      <Footer />
     </ThemeProvider>
   );
 }

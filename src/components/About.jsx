@@ -1,5 +1,5 @@
 import React from 'react';
-import WebDevOrbit from './WebDevOrbit';
+import ThreeOrbitLogos from './ThreeOrbitLogos';
 import styled from 'styled-components';
 import { about } from '../data';
 
@@ -78,10 +78,7 @@ const Location = styled.div`
 export default function About() {
   return (
     <Wrapper>
-      <div style={{ position: 'relative', minWidth: 220, minHeight: 220 }}>
-        <WebDevOrbit />
-        <Avatar style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 3 }}>MJ</Avatar>
-      </div>
+  <ThreeOrbitLogos />
       <Info>
         <Name>{about.name}</Name>
         <Title>{about.title}</Title>
